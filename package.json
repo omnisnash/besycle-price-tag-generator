@@ -3,10 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://omnisnash.github.io/besycle-price-tag-generator",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d build"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -18,8 +21,9 @@
     "@types/react-dom": "^18.0.11",
     "@types/styled-components": "^5.1.26",
     "@vitejs/plugin-react": "^4.0.0",
+    "gh-pages": "^5.0.0",
+    "styled-components": "^5.3.11",
     "typescript": "^5.0.2",
-    "vite": "^4.3.9",
-    "styled-components": "^5.3.11"
+    "vite": "^4.3.9"
   }
 }
