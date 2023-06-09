@@ -6,7 +6,7 @@
   "homepage": "https://omnisnash.github.io/besycle-price-tag-generator",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --base=/besycle-price-tag-generator",
     "preview": "vite preview",
     "predeploy" : "npm run build",
     "deploy" : "gh-pages -d dist"
