@@ -1,0 +1,32 @@
+@media print {
+    * {
+        -webkit-print-color-adjust: exact !important;   /* Chrome, Safari 6 – 15.3, Edge */
+        color-adjust: exact !important;                 /* Firefox 48 – 96 */
+        print-color-adjust: exact !important;           /* Firefox 97+, Safari 15.4+ */
+    }
+
+    @page {
+        size: A5;
+        margin: 0;
+    }
+
+    body {
+        visibility: hidden;
+    }
+    #render {
+        visibility: visible;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+}

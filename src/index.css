@@ -1,0 +1,36 @@
+@font-face {
+  font-family: 'Avenir Next Condensed DemiBold';
+  src: local('Avenir Next Condensed DemiBold'),
+  url('@/assets/fonts/avenir-next-condensed-demibold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Avenir Heavy';
+  src: local('Avenir Heavy'), local('Avenir-Heavy'),
+  url('@/assets/fonts/Avenir-Heavy.woff2') format('woff2'),
+  url('@/assets/fonts/Avenir-Heavy.woff') format('woff'),
+  url('@/assets/fonts/Avenir-Heavy.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Avenir Heavy Oblique';
+  src: local('Avenir Heavy Oblique'),
+  url('@/assets/fonts/avenir-heavy-oblique.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Avenir Medium Oblique';
+  src: local('Avenir Medium Oblique'),
+  url('@/assets/fonts/avenir-medium-oblique.ttf') format('truetype');
+}
+
+:root {
+  --main-green: #78b22b;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
