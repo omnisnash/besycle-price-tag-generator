@@ -1,14 +1,17 @@
 // https://marian-caikovski.medium.com/drawing-sectors-and-pie-charts-with-svg-paths-b99b5b6bf7bd
 import React from 'react';
 
+const isWhite = (color: string): boolean => {
+    return  color.toLowerCase() === "#ffffff"
+}
 
 const PieChart = (props: { colors: string[], radius: number }) => {
     const pieItemAngle = 360 / props.colors.length;
     const correctedRadius = props.radius;
     if (props.colors.length === 1) {
         return (
-            <svg >
-                <circle cx={correctedRadius} cy={correctedRadius} r={correctedRadius} fill={props.colors[0]} stroke="white" strokeWidth="2px"/>
+            <svg>
+                <circle cx={correctedRadius} cy={correctedRadius} r={correctedRadius} fill={props.colors[0]} stroke={isWhite(props.colors[0]) ? "black" : props.colors[0]} strokeWidth={"1px"}/>
             </svg>
         )
     }
@@ -17,14 +20,14 @@ const PieChart = (props: { colors: string[], radius: number }) => {
         const startAngle = index * pieItemAngle;
         const endAngle = (index + 1) * pieItemAngle;
 
-        return <path key={index} d={getD(correctedRadius, startAngle, endAngle)} fill={color} stroke="white" strokeWidth="2px"/>
+        return <path key={index} d={getD(correctedRadius, startAngle, endAngle)} fill={color} stroke={isWhite(color) ? "black" : color}  strokeWidth={"1px"}/>
     })
 
     const lines = props.colors.map((color, index) => {
         const startAngle = index * pieItemAngle;
         const start = polarToCartesian(correctedRadius, startAngle);
 
-        return <line key={index} x1={start.x} y1={start.y} x2={correctedRadius} y2={correctedRadius} stroke="white" strokeWidth="2px"/>
+        return <line key={index} x1={start.x} y1={start.y} x2={correctedRadius} y2={correctedRadius} stroke="white" strokeWidth="2px" strokeLinecap={"square"}/>
     })
 
     return (

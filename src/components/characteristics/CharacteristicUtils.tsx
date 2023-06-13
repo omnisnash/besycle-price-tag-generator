@@ -53,6 +53,7 @@ export const CharacteristicBlockIcon = styled.span`
   height: 50px;
   
   & svg {
+    overflow: visible;
     width: 50px;
     height: 50px;
   }
