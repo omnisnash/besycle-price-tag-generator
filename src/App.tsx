@@ -1,85 +1,84 @@
 import './App.css'
-import React, {useState} from "react";
-import styled from "styled-components";
-import Render from "./components/characteristics/Render.tsx";
-import TagForm from "./components/characteristics/TagForm.tsx";
-import {ProductTag} from "./model.ts";
+import styled, {css} from "styled-components";
+import TagGeneratorView from "./view/TagGeneratorView.tsx";
+import logoSrc from './assets/logo.png'
+import {useEffect, useState} from "react";
+import CatalogueView from "./view/CatalogueView.tsx";
 
 const Container = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
+  flex-direction: column;
 `
 
-const RenderZone = styled.div`
+const SubApp = styled.div`
   flex: 1 1 auto;
   overflow: auto;
-  background: #dedede;
-  padding: 16px;
 `
 
-const FormZone = styled.div`
-  flex: 0 0 400px;
-  background: black;
-  padding: 1rem;
+const Header = styled.header`
+  height: 64px;
+  width: 100%;
+  background: var(--main-bg);
+  flex: 0 0 auto;
+  display: flex;
+  gap: 2rem;
+  
+  img {
+
+    padding: 0.5rem 1rem;
+    box-sizing: border-box;
+    object-fit: contain;
+    max-height: 100%;
+  }
+`
+
+const Navigation = styled.nav`
+  display: flex;
+  align-items: stretch;
   height: 100%;
-  overflow: auto;
-  box-sizing: border-box;
 `
-const defaultTag: ProductTag = {
-    state: {type: "new"},
-    colors: ["#000000"]
-}
 
-const LOCAL_STORAGE_KEY = "product";
-function loadFromLocalStorage(): ProductTag {
-    let productTag: ProductTag = defaultTag;
+const NavigationItem = styled.div<{$selected?: boolean}>`
+  color: white;
+  align-items: center;
+  display: flex;
 
-    if (localStorage) {
-        const jsonProduct = localStorage.getItem(LOCAL_STORAGE_KEY);
-        if (!jsonProduct) {
-            return productTag;
-        }
+  padding: 0 1rem;
+  
+  ${props => props.$selected && css`
+    background: var(--main-green);
+    color: white;
+  `}
+  
+  &:hover {
+    background: var(--main-green);
+    color: white;
+    cursor: pointer;
+  }
+`
 
-        try {
-            productTag = JSON.parse(jsonProduct);
-        } catch (error) {
-            console.error(error)
-            return productTag;
-        }
-    }
 
-    return productTag;
-}
-function saveToLocalStorage(product: ProductTag): void {
-    if (localStorage) {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(product))
-    }
-}
 
+type VIEW = "TAG" | "CATALOG";
 function App() {
-    const [product, setProduct] = useState<ProductTag>(() => loadFromLocalStorage())
+    const [view, setView] = useState<VIEW>("TAG");
 
-    const handleUpdateProductTag = (productTag: ProductTag) => {
-        if (localStorage) {
-            saveToLocalStorage(productTag);
-        }
-
-        setProduct(productTag);
-    }
-
-    const handleReset = () => {
-        setProduct(defaultTag);
-    }
 
     return (
         <Container>
-            <RenderZone>
-                <Render product={product}/>
-            </RenderZone>
-            <FormZone id={"setup"}>
-                <TagForm product={product} onUpdate={handleUpdateProductTag} onReset={handleReset}/>
-            </FormZone>
+            <Header>
+                <img src={logoSrc} alt={""}/>
+                <Navigation>
+                    <NavigationItem $selected={view === "TAG"} onClick={() => setView("TAG")}>Fiche produit</NavigationItem>
+                    <NavigationItem $selected={view === "CATALOG"} onClick={() => setView("CATALOG")}>Catalogue</NavigationItem>
+                </Navigation>
+            </Header>
+            <SubApp>
+            {view === "TAG" && <TagGeneratorView/>}
+            {view === "CATALOG" && <CatalogueView/>}
+            </SubApp>
         </Container>
     )
 }

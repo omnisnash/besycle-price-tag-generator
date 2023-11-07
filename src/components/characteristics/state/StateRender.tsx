@@ -6,19 +6,19 @@ import {Placeholder} from "../CharacteristicUtils.tsx";
 const Title = styled.span`
   font-size: 1.2em;
   display: block;
-  font-family: "Avenir Heavy", serif;
+  font-family: "Avenir Heavy",Verdana, serif;
   line-height: 0.80;
 `
 
 const TitleInfo = styled.span`
   color: #3d3d3d;
-  font-family: "Avenir Heavy Oblique", serif;
+  font-family: "Avenir Heavy Oblique",Verdana, serif;
   font-size: 0.8em;
 `
 
 const Subtitle = styled.span`
   color: var(--main-green);
-  font-family: "Avenir Heavy Oblique", serif;
+  font-family: "Avenir Heavy Oblique",Verdana, serif;
   font-size: 0.9em;
 `
 

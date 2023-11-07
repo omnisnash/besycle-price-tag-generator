@@ -35,17 +35,17 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   background: black;
   height: 100px;
-  
+
   svg {
     height: 60px;
   }
 `
 
 const Title = styled.h1`
-  font-family: "Avenir Heavy", serif;
+  font-family: "Avenir Heavy",Verdana, serif;
   text-transform: uppercase;
   padding-left: ${PADDING_BORDER};
   font-weight: 600;
@@ -62,7 +62,7 @@ const PriceItem = styled.div`
 
 const PriceValueContainer = styled.span`
   background: var(--main-green);
-  color: white; 
+  color: white;
   padding: 0.2rem 1rem 0.2rem ${PADDING_BORDER};
   font-size: 1.5em;
   border-radius: 0 10px 10px 0;
@@ -83,7 +83,7 @@ const Characteristics = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(4, 1fr);
   max-height: 475px;
-  
+
   div:nth-child(even) {
     margin-left: ${PADDING_BORDER};
   }
@@ -145,7 +145,7 @@ const BleedSpace = styled.div`
 `
 
 
-const Render = (props: {product: ProductTag}) => {
+const Render = (props: { product: ProductTag }) => {
     const {product} = props;
     return (
         <RenderContainer id={"render"}>
@@ -159,37 +159,39 @@ const Render = (props: {product: ProductTag}) => {
 
             <Spacer height={1}/>
 
-            <Title>{product.name ? product.name : <Placeholder>nom du produit</Placeholder>}</Title>
+            <div id={"svg-export"}>
+                <Title>{product.name ? product.name : <Placeholder>nom du produit</Placeholder>}</Title>
 
-            <Spacer height={1}/>
+                <Spacer height={1}/>
 
-            <PriceAndState>
-                <PriceItem>
-                    <PriceValueContainer>
-                        <PriceRender price={product.price}/>
-                    </PriceValueContainer>
-                </PriceItem>
-                <StateItem>
-                    <StateValue state={product.state}/>
-                </StateItem>
-            </PriceAndState>
+                <PriceAndState>
+                    <PriceItem>
+                        <PriceValueContainer>
+                            <PriceRender price={product.price}/>
+                        </PriceValueContainer>
+                    </PriceItem>
+                    <StateItem>
+                        <StateValue state={product.state}/>
+                    </StateItem>
+                </PriceAndState>
 
-            <Spacer height={2}/>
+                <Spacer height={2}/>
 
-            <Characteristics>
-                <BatteryRender battery={product.battery}/>
-                <AutonomyRender autonomy={product.autonomy}/>
-                <MotorRender motor={product.motor}/>
-                <MaxSpeedRender maxSpeed={product.speed}/>
-                <ControllerRender controller={product.controller}/>
-                <WatertightnessRender watertightness={product.watertightness}/>
-                <WeightRender weight={product.weight}/>
-                <ColorRender colors={product.colors}/>
-            </Characteristics>
+                <Characteristics>
+                    <BatteryRender battery={product.battery}/>
+                    <AutonomyRender autonomy={product.autonomy}/>
+                    <MotorRender motor={product.motor}/>
+                    <MaxSpeedRender maxSpeed={product.speed}/>
+                    <ControllerRender controller={product.controller}/>
+                    <WatertightnessRender watertightness={product.watertightness}/>
+                    <WeightRender weight={product.weight}/>
+                    <ColorRender colors={product.colors}/>
+                </Characteristics>
 
-            <Footer>
-                <span>besycle.fr</span>
-            </Footer>
+                <Footer>
+                    <span>besycle.fr</span>
+                </Footer>
+            </div>
         </RenderContainer>
     );
 };

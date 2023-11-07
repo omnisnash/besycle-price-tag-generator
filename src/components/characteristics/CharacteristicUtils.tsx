@@ -12,31 +12,31 @@ export const BlockUpTitle = styled.span`
   display: block;
   text-transform: uppercase;
   line-height: 1.2;
-  font-family: "Avenir Heavy", serif;
+  font-family: "Avenir Heavy", Verdana, serif;
 `
 
 export const BlockTitle = styled.span`
   font-size: 1em;
   display: block;
-  font-family: "Avenir Heavy", serif;
+  font-family: "Avenir Heavy", Verdana,serif;
   line-height: 0.9;
 `
 
 export const BlockTitleEmphasis = styled.span`
   font-size: 1.5em;
   color: var(--main-green);
-  font-family: "Avenir Next Condensed DemiBold", serif;
+  font-family: "Avenir Next Condensed DemiBold", Verdana,serif;
 `
 
 export const BlockName = styled.span`
   font-size: 0.9em;
-  font-family: "Avenir Heavy", serif;
+  font-family: "Avenir Heavy",Verdana, serif;
 `
 
 export const BlockSubtitle = styled.span`
   color: #484848;
   font-size: 0.8em;
-  font-family: "Avenir Medium Oblique", serif;
+  font-family: "Avenir Medium Oblique", Verdana, serif;
   display: block;
 `
 

@@ -26,6 +26,7 @@
 
 :root {
   --main-green: #78b22b;
+  --main-bg: #141414;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
