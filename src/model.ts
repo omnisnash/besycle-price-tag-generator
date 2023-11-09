@@ -67,3 +67,37 @@ export interface WeightProperty {
     weight?: number;
     variationWeight?: number;
 }
+
+export interface ProductCsv {
+    "Mettre en avant"?: boolean,
+    "Name"?: string,
+    "Photo"?: string,
+    "Type"?: string,
+    "Marque"?: string,
+    "Prix"?: number,
+    "Garantie"?: number,
+    "Capacité"?: number,
+    "Capacité 2"?: number,
+    "Ampérage"?: number,
+    "Autonomie"?: number,
+    "Moteur"?: string,
+    "Puissance"?: string,
+    "Crête"?: number,
+    "Vitesse"?: number,
+    "Contrôleur"?: string,
+    "Étanchéité"?: string,
+    "Poids"?: number,
+    "Couleurs"?: string,
+    "Prix 2"?: number,
+    "Ampérage 2"?: number,
+    "Autonomie 2"?: number,
+    "Moteur 2"?: string,
+    "Puissance 2"?: string,
+    "Crête 2"?: number,
+    "Vitesse 2"?: number,
+    "Poids 2"?: number
+}
+
+export interface ProductCatalog extends ProductTag {
+    photo?: string
+}

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import styled from "styled-components";
 import {Placeholder} from "../components/characteristics/CharacteristicUtils.tsx";
 import Spacer from "../components/Spacer.tsx";
@@ -12,7 +12,9 @@ import ControllerRender from "../components/characteristics/controller/Controlle
 import WatertightnessRender from "../components/characteristics/watertightness/WatertightnessRender.tsx";
 import WeightRender from "../components/characteristics/weight/WeightRender.tsx";
 import ColorRender from "../components/characteristics/color/ColorRender.tsx";
-import {ProductTag} from "../model.ts";
+import {ProductCatalog, ProductTag} from "../model.ts";
+import {FormBlock, FormInput, FormLabel} from "../components/characteristics/FormUtils.tsx";
+import {parseCsv} from "../utils.ts";
 
 const Container = styled.div`
   height: 100%;
@@ -149,7 +151,37 @@ const Footer = styled.div`
   }
 `
 
+const Success = styled.div`
+  background: var(--main-green);
+  color: white;
+  padding: 1rem;
+`
+
+const Error = styled.div`
+  background: darkred;
+  color: white;
+  padding: 1rem;
+`
+
+export const Button = styled.button`
+  flex: 0 0 max-content;
+  background: transparent;
+  border: 1px solid var(--main-green);
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  color: white;
+  cursor: pointer;
+  
+  &:hover {
+    background: var(--main-green);
+  }
+`
+
 function CatalogueView() {
+    const [products, setProducts] = useState<ProductCatalog[]>()
+    const [error, setError] = useState()
+    const [isLoading, setLoading] = useState<boolean>(false)
+
     useEffect(() => {
         document.title = "Be'Sycle - Catalogue"
     }, [])
@@ -169,24 +201,57 @@ function CatalogueView() {
 
     };
 
+    const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+        if (!event.target.files) {
+            return;
+        }
+
+        setLoading(true)
+        setProducts(undefined);
+        setError(undefined);
+
+        const file = event.target.files[0];
+        parseCsv(file)
+            .then(products => setProducts(products))
+            .catch(error => setError(error))
+            .finally(() => setLoading(false))
+    }
+
     return (
         <Container>
             <RenderZone >
                 <RenderContainer id={"render"}>
-                    <CatalogPage product={product} imageUrl={"https://www.minimotors.fr/wp-content/uploads/2021/05/Dualtron_thunder_2_1200x1600_1.jpg"}/>
-                    <CatalogPage product={product} imageUrl={"https://www.minimotors.fr/wp-content/uploads/2021/05/Dualtron_thunder_2_1200x1600_1.jpg"}/>
-                    <CatalogPage product={product} imageUrl={"https://www.minimotors.fr/wp-content/uploads/2021/05/Dualtron_thunder_2_1200x1600_1.jpg"}/>
-                    <CatalogPage product={product} imageUrl={"https://www.minimotors.fr/wp-content/uploads/2021/05/Dualtron_thunder_2_1200x1600_1.jpg"}/>
+                    {products && products.map((product, index) => <CatalogPage product={product} imageUrl={product.photo}/>)}
                 </RenderContainer>
             </RenderZone>
             <FormZone id={"setup"}>
-
+                <FormBlock>
+                    <FormLabel>Données produits</FormLabel>
+                    <FormInput disabled={isLoading} type={"file"} onChange={handleFileUpload} accept={"text/csv"} />
+                </FormBlock>
+                {isLoading && (
+                    <FormLabel>Chargements...</FormLabel>
+                )}
+                {products && (
+                    <>
+                    <Success>
+                        {products?.length} produits trouvés
+                    </Success>
+                    <Spacer height={1}/>
+                    <Button onClick={window.print}>Imprimer</Button>
+                    </>
+                )}
+                {error && (
+                    <Error>
+                        Erreur: {JSON.stringify(error)}
+                    </Error>
+                )}
             </FormZone>
         </Container>
     )
 }
 
-const CatalogPage = (props: {product: ProductTag, imageUrl: string}) => {
+const CatalogPage = (props: {product: ProductTag, imageUrl?: string}) => {
     const {product, imageUrl} = props;
 
     return (

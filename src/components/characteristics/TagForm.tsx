@@ -12,7 +12,7 @@ import ControllerForm from "./controller/ControllerForm.tsx";
 import WatertightnessForm from "./watertightness/WatertightnessForm.tsx";
 import WeightForm from "./weight/WeightForm.tsx";
 import ColorForm from "./color/ColorForm.tsx";
-import {elementToSVG} from "dom-to-svg";
+import {Button} from "../../view/CatalogueView.tsx";
 
 export const ClearContainer = styled.div`
   display: flex;
@@ -50,25 +50,6 @@ const TagForm = (props: SetupProps) => {
         document.title = props.product.name ?? "Be'Sycle - Etiquette produit"
     }, [props.product.name])
 
-    const exportSvg = () => {
-        const svg = document.getElementById('svg-export');
-        if (svg) {
-            const svgDocument = elementToSVG(svg)
-            const svgString = new XMLSerializer().serializeToString(svgDocument)
-            console.log(svgString)
-
-            const blob = new Blob([svgString], {type: 'image/svg+xml'});
-            const elem = window.document.createElement('a');
-            elem.href = window.URL.createObjectURL(blob);
-            elem.download = "data.svg";
-            document.body.appendChild(elem);
-            elem.click();
-            document.body.removeChild(elem);
-
-        } else {
-            console.error("No export-svg dom found")
-        }
-    }
 
     return (
         <>
@@ -77,7 +58,7 @@ const TagForm = (props: SetupProps) => {
                     <Title>Données produit</Title>
                 </ClearContainer>
                 <ClearButton onClick={props.onReset}>Vider le formulaire</ClearButton>
-                <ClearButton onClick={exportSvg}>Exporter en SVG</ClearButton>
+                <ClearButton onClick={window.print}>Imprimer</ClearButton>
             </FormBlock>
 
             <FormBlock>

@@ -1,4 +1,6 @@
-import {ProductTag, State} from "./model.ts";
+import {ProductCatalog, ProductCsv, ProductTag, State} from "./model.ts";
+import Papa from "papaparse";
+import {Simulate} from "react-dom/test-utils";
 
 export function importTagFromUrl(url: string): ProductTag | null {
     let params = (new URL(url)).searchParams;
@@ -71,5 +73,70 @@ export function importTagFromUrl(url: string): ProductTag | null {
             variationWeight: getNumber("weight2"),
         },
         colors: getColor("colors")
+    }
+}
+
+export async function parseCsv(file: File): Promise<ProductCatalog[]> {
+    return new Promise((resolve, reject) => {
+        Papa.parse<ProductCsv>(file, {
+            header: true,
+            dynamicTyping: true,
+            error: (error) => {
+                console.error(error)
+                reject(error)
+            },
+            complete: (results) => {
+                if (results.errors.length) {
+                    console.error(results.errors)
+                    reject(results.errors.map(error => error.message).join(', '))
+                }
+
+                resolve(results.data.map(data => csvToProduct(data)))
+            }
+        })
+    })
+}
+
+function csvToProduct(data: ProductCsv): ProductCatalog {
+    return {
+        photo: data["Photo"],
+        name: data["Name"],
+        weight: {
+            weight: data["Poids"],
+            variationWeight: data["Poids 2"]
+        },
+        price: {
+            base: data["Prix"],
+            variant: data["Prix 2"],
+        },
+        state: {
+            type: "new",
+            warranty: data["Garantie"]
+        },
+        battery: {
+            amperage: data["Ampérage"],
+            variationAmperage: data["Ampérage 2"],
+            voltage: data["Capacité"],
+            variationVoltage: data["Capacité 2"]
+        },
+        autonomy: {
+            autonomy: data["Autonomie"],
+            variationAutonomy: data["Autonomie 2"]
+        },
+        motor: {
+            name: data["Moteur"],
+            wattPeak: data["Crête"],
+            wattPower: data["Puissance"],
+            variationName: data["Moteur 2"],
+            variationWattPeak: data["Crête 2"],
+            variationWattPower: data["Puissance 2"]
+        },
+        controller: data["Contrôleur"],
+        speed: {
+            speed: data["Vitesse"],
+            variationSpeed: data["Vitesse 2"]
+        },
+        colors: data["Couleurs"]?.split(",") ?? [],
+        watertightness: data["Étanchéité"],
     }
 }
