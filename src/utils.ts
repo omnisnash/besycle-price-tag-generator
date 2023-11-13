@@ -114,10 +114,10 @@ function csvToProduct(data: ProductCsv): ProductCatalog {
             warranty: data["Garantie"]
         },
         battery: {
-            amperage: data["Ampérage"],
-            variationAmperage: data["Ampérage 2"],
-            voltage: data["Capacité"],
-            variationVoltage: data["Capacité 2"]
+            amperage: data["Capacité"],
+            variationAmperage: data["Capacité 2"],
+            voltage: data["Voltage"],
+            variationVoltage: data["Voltage 2"]
         },
         autonomy: {
             autonomy: data["Autonomie"],
